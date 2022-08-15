@@ -1,3 +1,4 @@
+import { ThreadsData } from '@/types/entities';
 import { useQuery, gql } from '@apollo/client';
 import { isNil } from 'ramda';
 
@@ -9,15 +10,6 @@ const QUERY = gql`
     }
   }
 `;
-
-interface Thread {
-  _id: string;
-  title: string;
-}
-
-interface ThreadsData {
-  threads: Thread[];
-}
 
 export default function Threads() {
   const { data, loading, error } = useQuery<ThreadsData>(QUERY);
