@@ -27,7 +27,7 @@ export const typeDefs = gql`
   type Query {
     thread(id: ID!): Thread
     threads: [Thread!]!
-    comments: [Comment!]!
+    comments(threadId: ID!): [Comment!]!
   }
 
   type Mutation {

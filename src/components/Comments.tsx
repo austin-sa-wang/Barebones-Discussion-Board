@@ -3,8 +3,8 @@ import { useQuery, gql } from '@apollo/client';
 import { isNil } from 'ramda';
 
 const QUERY = gql`
-  query Comments {
-    comments {
+  query Comments($threadId: ID!) {
+    comments(threadId: $threadId) {
       _id
       content
       parentEntity
@@ -13,8 +13,16 @@ const QUERY = gql`
   }
 `;
 
-export default function Comments() {
-  const { data, loading, error } = useQuery<CommentsData>(QUERY);
+interface Props {
+  threadId: string;
+}
+
+export default function Comments({ threadId }: Props) {
+  const { data, loading, error } = useQuery<CommentsData>(QUERY, {
+    variables: {
+      threadId,
+    },
+  });
 
   if (loading) {
     return <h2>Loading...</h2>;

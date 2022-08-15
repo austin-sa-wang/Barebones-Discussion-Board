@@ -2,7 +2,6 @@ import { BasicLinkButton } from '@/components/BasicButton';
 import Comments from '@/components/Comments';
 import { CommentInput, Entity, ThreadData } from '@/types/entities';
 import { useQuery, gql, useMutation } from '@apollo/client';
-import { ObjectId } from 'mongodb';
 import { useRouter } from 'next/router';
 import { isNil } from 'ramda';
 import { useState } from 'react';
@@ -34,7 +33,7 @@ const CREATE_COMMENT = gql`
 export default function Threads() {
   const router = useRouter();
 
-  const { id } = router.query;
+  const id = router.query.id as unknown as string;
 
   let shouldSkip = false;
   if (typeof id !== `string`) {
@@ -67,7 +66,7 @@ export default function Threads() {
     createCommentToServer({
       variables: {
         parentEntity: Entity.Thread,
-        parentId: id as unknown as string,
+        parentId: id,
         content: commentContent,
       },
       refetchQueries: [`Comments`],
@@ -95,7 +94,7 @@ export default function Threads() {
         </div>
         <div className="mt-2">
           <h1>Comments</h1>
-          <Comments />
+          <Comments threadId={id} />
           <textarea
             className="border p-4 min-w-full h-24"
             value={commentContent}
