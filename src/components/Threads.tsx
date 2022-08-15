@@ -27,16 +27,16 @@ export default function Threads() {
   }
 
   if (error) {
-    return <h2>Something went wrong { JSON.stringify(error) }</h2>;
+    return <h2>Something went wrong {JSON.stringify(error)}</h2>;
   }
 
   return (
-    <div className='container mx-auto max-w-2xl border'>
-      <div className='grid grid-cols-1 divide-y'>
+    <div className="container mx-auto max-w-2xl border">
+      <div className="grid grid-cols-1 divide-y">
         {isNil(data) || isNil(data.threads)
           ? null
           : data.threads.map((thread) => (
-              <div key={thread._id} className='py-4 px-4 hover:shadow-inner'>
+              <div key={thread._id} className="py-4 px-4 hover:shadow-inner">
                 <h3>{thread.title}</h3>
               </div>
             ))}
