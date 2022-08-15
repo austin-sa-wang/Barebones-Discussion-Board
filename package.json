@@ -26,7 +26,13 @@
     ]
   },
   "dependencies": {
+    "@apollo/client": "3.6.9",
+    "@graphql-yoga/node": "2.13.6",
+    "@types/ramda": "0.28.15",
+    "graphql": "16.5.0",
+    "mongodb": "4.8.1",
     "next": "12.2.3",
+    "ramda": "0.28.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
