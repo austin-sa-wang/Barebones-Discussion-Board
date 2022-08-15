@@ -31,7 +31,7 @@ export default function Threads() {
   }
 
   return (
-    <div className="container mx-auto max-w-2xl border">
+    <div className="container mx-auto border">
       <div className="grid grid-cols-1 divide-y">
         {isNil(data) || isNil(data.threads)
           ? null

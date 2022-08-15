@@ -16,14 +16,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto px-4 py-16">
+      <main className="container mx-auto px-4 py-16 max-w-2xl">
         <ClientOnly>
           <Threads />
         </ClientOnly>
         <Link href="/new-thread">
-          <span className="cursor-pointer p-6 font-semibold text-md bg-cyan-500 hover:bg-sky-700 text-white rounded-full shadow-sm">
+          <div className="mt-4 cursor-pointer p-6 font-semibold text-md bg-cyan-500 hover:bg-sky-700 text-white rounded-full shadow-sm w-fit">
             + New Thread
-          </span>
+          </div>
         </Link>
       </main>
     </div>

@@ -1,7 +1,10 @@
-import { threads } from './threads';
+import { threads, createThread } from './threads';
 
 export const resolvers = {
   Query: {
     threads,
+  },
+  Mutation: {
+    createThread,
   },
 };
