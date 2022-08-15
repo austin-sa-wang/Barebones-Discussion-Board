@@ -1,5 +1,6 @@
 import { ThreadsData } from '@/types/entities';
 import { useQuery, gql } from '@apollo/client';
+import Link from 'next/link';
 import { isNil } from 'ramda';
 
 const QUERY = gql`
@@ -30,12 +31,20 @@ export default function Threads() {
         {isNil(data) || isNil(data.threads)
           ? null
           : data.threads.map((thread) => (
-              <div
+              <Link
                 key={thread._id}
-                className="py-4 px-4 hover:shadow-inner cursor-pointer"
+                href={{
+                  pathname: `/thread/[id]`,
+                  query: { id: thread._id },
+                }}
               >
-                <h3>{thread.title}</h3>
-              </div>
+                <div
+                  key={thread._id}
+                  className="py-4 px-4 hover:shadow-inner cursor-pointer"
+                >
+                  <h3>{thread.title}</h3>
+                </div>
+              </Link>
             ))}
       </div>
     </div>
