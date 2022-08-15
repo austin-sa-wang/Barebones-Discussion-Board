@@ -27,8 +27,7 @@ export default function Threads() {
   }
 
   if (error) {
-    console.error(error);
-    return null;
+    return <h2>Something went wrong { JSON.stringify(error) }</h2>;
   }
 
   return (
