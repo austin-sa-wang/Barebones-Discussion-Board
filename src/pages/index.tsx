@@ -1,13 +1,12 @@
 import Head from 'next/head';
 import Image from 'next/image';
 
-import styles from '@/styles/Home.module.css';
-import ClientOnly from '@/components/ClientOnly';
+import ClientOnly from '@/components/utils/ClientOnly';
 import Threads from '@/components/Threads';
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>TypeScript starter for Next.js</title>
         <meta
@@ -17,20 +16,21 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main>
+        <h1 className="text-3xl font-bold underline">Hello world!</h1>
         <ClientOnly>
           <Threads />
         </ClientOnly>
       </main>
 
-      <footer className={styles.footer}>
+      <footer>
         <a
           href="https://vercel.com?utm_source=typescript-nextjs-starter"
           target="_blank"
           rel="noopener noreferrer"
         >
           Powered by{` `}
-          <span className={styles.logo}>
+          <span>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>

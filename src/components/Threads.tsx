@@ -1,6 +1,5 @@
 import { useQuery, gql } from '@apollo/client';
 import { isNil } from 'ramda';
-import styles from '../styles/Home.module.css';
 
 const QUERY = gql`
   query Threads {
@@ -33,11 +32,12 @@ export default function Threads() {
   }
 
   return (
-    <div className={styles.grid}>
+    <div>
+      <h2 className="text-3xl font-bold underline">AHAHAHJAKLKAJSDJF</h2>
       {isNil(data) || isNil(data.threads)
         ? null
         : data.threads.map((thread) => (
-            <div key={thread._id} className={styles.card}>
+            <div key={thread._id}>
               <h3>{thread.title}</h3>
               <p>{thread._id}</p>
             </div>
