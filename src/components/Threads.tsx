@@ -32,16 +32,16 @@ export default function Threads() {
   }
 
   return (
-    <div>
-      <h2 className="text-3xl font-bold underline">AHAHAHJAKLKAJSDJF</h2>
-      {isNil(data) || isNil(data.threads)
-        ? null
-        : data.threads.map((thread) => (
-            <div key={thread._id}>
-              <h3>{thread.title}</h3>
-              <p>{thread._id}</p>
-            </div>
-          ))}
+    <div className='container mx-auto max-w-2xl border'>
+      <div className='grid grid-cols-1 divide-y'>
+        {isNil(data) || isNil(data.threads)
+          ? null
+          : data.threads.map((thread) => (
+              <div key={thread._id} className='py-4 px-4 hover:shadow-inner'>
+                <h3>{thread.title}</h3>
+              </div>
+            ))}
+      </div>
     </div>
   );
 }
