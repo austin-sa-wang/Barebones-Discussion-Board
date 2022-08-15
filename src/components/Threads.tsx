@@ -12,7 +12,9 @@ const QUERY = gql`
 `;
 
 export default function Threads() {
-  const { data, loading, error } = useQuery<ThreadsData>(QUERY);
+  const { data, loading, error } = useQuery<ThreadsData>(QUERY, {
+    fetchPolicy: `cache-and-network`,
+  });
 
   if (loading) {
     return <h2>Loading...</h2>;

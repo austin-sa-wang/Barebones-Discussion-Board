@@ -5,7 +5,11 @@ import { ObjectId } from 'mongodb';
 export const threads = async () => {
   const { db } = await connectToDatabase();
 
-  const threads = await db.collection(`threads`).find().toArray();
+  const threads = await db
+    .collection(`threads`)
+    .find()
+    .sort({ createdAt: -1 })
+    .toArray();
 
   return threads;
 };
