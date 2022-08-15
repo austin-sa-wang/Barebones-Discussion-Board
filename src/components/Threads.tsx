@@ -28,7 +28,10 @@ export default function Threads() {
         {isNil(data) || isNil(data.threads)
           ? null
           : data.threads.map((thread) => (
-              <div key={thread._id} className="py-4 px-4 hover:shadow-inner">
+              <div
+                key={thread._id}
+                className="py-4 px-4 hover:shadow-inner cursor-pointer"
+              >
                 <h3>{thread.title}</h3>
               </div>
             ))}

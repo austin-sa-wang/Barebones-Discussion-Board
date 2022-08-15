@@ -1,6 +1,7 @@
 import { ThreadInput } from '@/types/entities';
 import { gql, useMutation } from '@apollo/client';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import { useState } from 'react';
 
@@ -11,13 +12,22 @@ const CREATE_THREAD = gql`
 `;
 
 export default function NewThread() {
+  const router = useRouter();
+
   const [title, setTitle] = useState(``);
   const [content, setContent] = useState(``);
 
-  const [createThreadToServer, { data, loading, error }] = useMutation<
+  const [createThreadToServer, { loading }] = useMutation<
     any,
     { input: ThreadInput }
-  >(CREATE_THREAD);
+  >(CREATE_THREAD, {
+    onCompleted() {
+      router.push(`/`);
+    },
+    onError(error) {
+      throw error;
+    },
+  });
 
   const createThread = () => {
     console.log(`create`, content);
@@ -64,8 +74,9 @@ export default function NewThread() {
         <button
           onClick={() => createThread()}
           className="p-2 font-semibold text-sm bg-cyan-500 hover:bg-sky-700 text-white rounded-md shadow-sm"
+          disabled={loading}
         >
-          Create Thread
+          {loading ? `Saving...` : `Create Thread`}
         </button>
       </main>
     </div>

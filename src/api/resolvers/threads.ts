@@ -16,15 +16,12 @@ export const createThread = async (
 ) => {
   const { db } = await connectToDatabase();
 
-  console.log(`args`, args);
-
   const createdThread = await db.collection(`threads`).insertOne({
     _id: new ObjectId(),
     title: args.input.title,
     content: args.input.content,
+    createdAt: new Date(),
   });
-
-  console.log(`createdThread`, createdThread);
 
   return createdThread.insertedId;
 };
