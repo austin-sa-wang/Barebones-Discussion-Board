@@ -30,7 +30,6 @@ export default function NewThread() {
   });
 
   const createThread = () => {
-    console.log(`create`, content);
     createThreadToServer({
       variables: {
         input: {

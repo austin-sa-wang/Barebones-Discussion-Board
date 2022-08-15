@@ -5,8 +5,6 @@ import { ObjectId } from 'mongodb';
 export const thread = async (parent: unknown, args: { id: ObjectId }) => {
   const { db } = await connectToDatabase();
 
-  console.log(`id`, args.id);
-
   const thread = await db
     .collection(`threads`)
     .findOne({ _id: new ObjectId(args.id) });
