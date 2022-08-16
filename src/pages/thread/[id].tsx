@@ -24,6 +24,7 @@ const COMMENTS_QUERY = gql`
       content
       parentCommentId
       depth
+      createdAt
     }
   }
 `;

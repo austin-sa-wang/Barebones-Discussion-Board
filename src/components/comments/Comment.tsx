@@ -31,6 +31,7 @@ export const Comment = ({ comment }: Props) => {
       </div>
       <div>
         <p className="py-4">{comment.content}</p>
+        <p className="text-xs text-slate-400">{comment.createdAt}</p>
         <button
           onClick={() => toggleReplyBox()}
           className="p-1 text-xs text-slate-400"

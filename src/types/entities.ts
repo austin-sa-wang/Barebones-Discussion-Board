@@ -11,6 +11,7 @@ export interface CommentBase {
   content: string;
   parentCommentId: string;
   depth: number;
+  createdAt: string;
 }
 
 export interface Comment extends CommentBase {

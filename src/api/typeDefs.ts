@@ -10,6 +10,7 @@ export const typeDefs = gql`
     _id: ID!
     title: String
     content: String
+    createdAt: String
   }
 
   type Comment {
@@ -17,6 +18,7 @@ export const typeDefs = gql`
     content: String
     parentCommentId: ID
     depth: Int
+    createdAt: String
   }
 
   input ThreadInput {
