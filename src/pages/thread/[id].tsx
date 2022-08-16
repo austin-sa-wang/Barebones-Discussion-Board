@@ -71,6 +71,8 @@ export default function Threads() {
     variables: {
       threadId,
     },
+    fetchPolicy: `cache-and-network`,
+    skip: shouldSkip,
   });
 
   const [commentContent, setCommentContent] = useState(``);
