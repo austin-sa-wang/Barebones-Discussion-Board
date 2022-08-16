@@ -1,6 +1,7 @@
 import { CommentsData } from '@/types/entities';
 import { useQuery, gql } from '@apollo/client';
 import { isNil } from 'ramda';
+import { CommentsView } from './CommentsView';
 
 const QUERY = gql`
   query Comments($threadId: ID!) {
@@ -35,16 +36,9 @@ export default function Comments({ threadId }: Props) {
   return (
     <div className="container mx-auto border">
       <div className="grid grid-cols-1 divide-y">
-        {isNil(data) || isNil(data.comments)
-          ? null
-          : data.comments.map((comment) => (
-              <div
-                key={comment._id}
-                className="py-4 px-4 hover:shadow-inner cursor-pointer"
-              >
-                <h3>{comment.content}</h3>
-              </div>
-            ))}
+        {isNil(data) || isNil(data.comments) ? null : (
+          <CommentsView comments={data.comments} />
+        )}
       </div>
     </div>
   );
