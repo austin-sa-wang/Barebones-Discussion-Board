@@ -14,6 +14,6 @@ export const MetamaskConnect = () => {
       </button>
     );
   } else {
-    return <p>Connected as {JSON.stringify(connectedAccounts)}</p>;
+    return <div className='bg-green-200'><p>Connected as {JSON.stringify(connectedAccounts)}</p></div>;
   }
 };
