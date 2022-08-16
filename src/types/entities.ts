@@ -1,14 +1,20 @@
 import { ObjectId } from 'mongodb';
 
-export interface Thread {
-  _id: ObjectId;
+interface ThreadBase {
   title: string;
   content: string;
   userAccount: string;
 }
 
-export interface Comment {
+export interface Thread extends ThreadBase {
   _id: ObjectId;
+}
+
+interface ClientThread extends ThreadBase {
+  _id: string;
+}
+
+interface CommentBase {
   content: string;
   parentCommentId: string;
   depth: number;
@@ -16,12 +22,20 @@ export interface Comment {
   userAccount: string;
 }
 
+export interface Comment extends CommentBase {
+  _id: ObjectId;
+}
+
+export interface ClientComment extends CommentBase {
+  _id: string;
+}
+
 export interface ThreadData {
-  thread: Thread;
+  thread: ClientThread;
 }
 
 export interface ThreadsData {
-  threads: Thread[];
+  threads: ClientThread[];
 }
 
 export interface ThreadInput {
@@ -36,5 +50,5 @@ export interface CommentInput {
 }
 
 export interface CommentsData {
-  comments: Comment[];
+  comments: ClientComment[];
 }
