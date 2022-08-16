@@ -1,14 +1,14 @@
 import { CommentBase, Thread } from '@/types/entities';
 import { createContext } from 'react';
 
-interface ThreadContext {
+export interface IThreadContext {
   thread: Thread | undefined;
   comments: CommentBase[] | undefined;
-  replyToComment(parentCommentId: CommentBase, content: string): void;
+  replyToComment(parentCommentId: string, content: string): void;
 }
 
-export const ThreadContext = createContext<ThreadContext>({
-  thread: null,
+export const ThreadContext = createContext<IThreadContext>({
+  thread: undefined,
   comments: [],
   replyToComment: () => {
     console.log(`stub`);

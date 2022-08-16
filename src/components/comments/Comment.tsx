@@ -1,16 +1,19 @@
 import { CommentBase } from '@/types/entities';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ThreadContext } from '../ThreadContext';
 
 interface Props {
   comment: CommentBase;
 }
 
 export const Comment = ({ comment }: Props) => {
+  const threadContext = useContext(ThreadContext);
+
   const [commentContent, setCommentContent] = useState(``);
   const [loading] = useState(false);
 
   const createComment = () => {
-    console.log(`stub`);
+    threadContext.replyToComment(comment._id, commentContent);
   };
 
   return (

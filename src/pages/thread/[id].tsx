@@ -1,6 +1,6 @@
 import { BasicLinkButton } from '@/components/BasicButton';
 import Comments from '@/components/comments/Comments';
-import { ThreadContext } from '@/components/ThreadContext';
+import { IThreadContext, ThreadContext } from '@/components/ThreadContext';
 import { CommentInput, CommentsData, ThreadData } from '@/types/entities';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
@@ -29,8 +29,16 @@ const COMMENTS_QUERY = gql`
 `;
 
 const CREATE_COMMENT = gql`
-  mutation createComment($threadId: ID!, $content: String!) {
-    createComment(threadId: $threadId, content: $content)
+  mutation createComment(
+    $threadId: ID!
+    $content: String!
+    $parentCommentId: ID
+  ) {
+    createComment(
+      threadId: $threadId
+      content: $content
+      parentCommentId: $parentCommentId
+    )
   }
 `;
 
@@ -44,7 +52,11 @@ export default function Threads() {
     shouldSkip = true;
   }
 
-  const { data, loading, error } = useQuery<ThreadData>(QUERY, {
+  const {
+    data: threadData,
+    loading,
+    error,
+  } = useQuery<ThreadData>(QUERY, {
     variables: {
       id: threadId,
     },
@@ -82,11 +94,18 @@ export default function Threads() {
     });
   };
 
-  const threadContextInstance = {
-    thread: data,
+  const threadContextInstance: IThreadContext = {
+    thread: isNil(threadData) ? undefined : threadData.comments,
     comments: isNil(commentsData) ? undefined : commentsData.comments,
-    replyToComment: () => {
-      console.log(`stub`);
+    replyToComment: (parentCommentId, content) => {
+      createCommentToServer({
+        variables: {
+          threadId,
+          content,
+          parentCommentId,
+        },
+        refetchQueries: [`Comments`],
+      });
     },
   };
 
@@ -100,11 +119,11 @@ export default function Threads() {
       </BasicLinkButton>
       <div className="container mx-auto px-4 py-16 max-w-2xl">
         <div className="mt-2">
-          {isNil(data) || isNil(data.thread) ? null : (
+          {isNil(threadData) || isNil(threadData.thread) ? null : (
             <div>
-              <p className="p-2">{data.thread.title}</p>
+              <p className="p-2">{threadData.thread.title}</p>
               <p className="border p-4 min-w-full h-48">
-                {data.thread.content}
+                {threadData.thread.content}
               </p>
             </div>
           )}
