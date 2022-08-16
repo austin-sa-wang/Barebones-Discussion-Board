@@ -4,6 +4,7 @@ import { resolvers } from './resolvers';
 
 import { createServer } from '@graphql-yoga/node';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { isNil } from 'ramda';
 
 export const config = {
   api: {
@@ -21,6 +22,16 @@ export const createGraphqlServer = () => {
     schema: {
       typeDefs,
       resolvers,
+    },
+    context: async ({ request }) => {
+      const authHeader = request.headers.get(`authorization`);
+      const userAccount = isNil(authHeader)
+        ? null
+        : authHeader.replace(`Bearer `, ``);
+
+      return {
+        userAccount,
+      };
     },
   });
 };

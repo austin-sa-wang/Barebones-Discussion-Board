@@ -1,6 +1,7 @@
 import { connectToDatabase } from '@/lib/mongoClient';
 import { sortCommentsAsFlattenedTree } from '@/lib/sortCommentsAsFlattenedTree';
 import { CommentBase, CommentInput } from '@/types/entities';
+import { GraphqlResolverContext } from '@/types/server';
 import { ObjectId } from 'mongodb';
 import { isNil } from 'ramda';
 
@@ -19,7 +20,11 @@ export const comments = async (parent: unknown, args: { threadId: string }) => {
   return sortedComments;
 };
 
-export const createComment = async (parent: unknown, args: CommentInput) => {
+export const createComment = async (
+  parent: unknown,
+  args: CommentInput,
+  context: GraphqlResolverContext,
+) => {
   const { db } = await connectToDatabase();
 
   // @todo validate parent thread
@@ -47,6 +52,7 @@ export const createComment = async (parent: unknown, args: CommentInput) => {
     content: args.content,
     createdAt: new Date(),
     depth,
+    userAccount: context.userAccount,
   });
 
   return createdThread.insertedId;

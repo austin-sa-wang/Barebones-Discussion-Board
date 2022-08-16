@@ -1,5 +1,6 @@
 import { connectToDatabase } from '@/lib/mongoClient';
 import { ThreadInput } from '@/types/entities';
+import { GraphqlResolverContext } from '@/types/server';
 import { ObjectId } from 'mongodb';
 
 export const thread = async (parent: unknown, args: { id: ObjectId }) => {
@@ -27,6 +28,7 @@ export const threads = async () => {
 export const createThread = async (
   parent: unknown,
   args: { input: ThreadInput },
+  context: GraphqlResolverContext,
 ) => {
   const { db } = await connectToDatabase();
 
@@ -35,6 +37,7 @@ export const createThread = async (
     title: args.input.title,
     content: args.input.content,
     createdAt: new Date(),
+    userAccount: context.userAccount,
   });
 
   return createdThread.insertedId;
