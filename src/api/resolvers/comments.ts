@@ -1,6 +1,6 @@
 import { connectToDatabase } from '@/lib/mongoClient';
 import { sortCommentsAsFlattenedTree } from '@/lib/sortCommentsAsFlattenedTree';
-import { CommentBase, CommentInput } from '@/types/entities';
+import { Comment, CommentInput } from '@/types/entities';
 import { GraphqlResolverContext } from '@/types/server';
 import { ObjectId } from 'mongodb';
 import { isNil } from 'ramda';
@@ -9,7 +9,7 @@ export const comments = async (parent: unknown, args: { threadId: string }) => {
   const { db } = await connectToDatabase();
 
   const comments = await db
-    .collection<CommentBase>(`comments`)
+    .collection<Comment>(`comments`)
     .find({
       threadId: args.threadId,
     })
@@ -31,7 +31,7 @@ export const createComment = async (
 
   let depth = 0;
   if (!isNil(args.parentCommentId)) {
-    const parentComment = await db.collection<CommentBase>(`comments`).findOne(
+    const parentComment = await db.collection<Comment>(`comments`).findOne(
       {
         _id: new ObjectId(args.parentCommentId),
       },

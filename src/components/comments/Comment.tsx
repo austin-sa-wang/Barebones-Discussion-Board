@@ -1,9 +1,9 @@
-import { CommentBase } from '@/types/entities';
+import { Comment } from '@/types/entities';
 import { useContext, useState } from 'react';
 import { ThreadContext } from '../ThreadContext';
 
 interface Props {
-  comment: CommentBase;
+  comment: Comment;
 }
 
 export const Comment = ({ comment }: Props) => {

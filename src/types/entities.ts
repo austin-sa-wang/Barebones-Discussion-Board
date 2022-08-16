@@ -7,24 +7,13 @@ export interface Thread {
   userAccount: string;
 }
 
-export interface CommentBase {
+export interface Comment {
   _id: ObjectId;
   content: string;
   parentCommentId: string;
   depth: number;
   createdAt: string;
   userAccount: string;
-}
-
-export interface Comment extends CommentBase {
-  childrenComments: Comment[];
-}
-
-export type FlattenedCommentNode = CommentBase;
-
-export type FlattenedCommentTree = FlattenedCommentNode[];
-export interface CommentForView {
-  childrenComments: CommentForView[];
 }
 
 export interface ThreadData {

@@ -1,4 +1,4 @@
-import { CommentBase } from '@/types/entities';
+import { Comment } from '@/types/entities';
 import { sortBy } from 'ramda';
 import { arrayToTree, TreeItem } from 'performant-array-to-tree';
 
@@ -15,9 +15,7 @@ import { depth } from 'treeverse';
  * This way we don't need to run through this algorithm every time
  *
  */
-export const sortCommentsAsFlattenedTree = (
-  comments: CommentBase[],
-): unknown[] => {
+export const sortCommentsAsFlattenedTree = (comments: Comment[]): unknown[] => {
   // build map per depth then assemble
 
   // @assumption assume nodes are already sorted by depth. This library requires it for O(n)
@@ -35,11 +33,11 @@ export const sortCommentsAsFlattenedTree = (
   // so when we query mongo we actually do it in reverse, so that the traversal here flips it back
   const sortedTree = sortBy((node) => node.data.createdAt, tree);
 
-  const result = sortedTree.reduce<CommentBase[]>((aggregate, current) => {
+  const result = sortedTree.reduce<Comment[]>((aggregate, current) => {
     depth<TreeItem>({
       tree: current,
       getChildren: (node) => node.children,
-      visit: (node) => aggregate.push(node.data as CommentBase),
+      visit: (node) => aggregate.push(node.data as Comment),
     });
 
     return aggregate;

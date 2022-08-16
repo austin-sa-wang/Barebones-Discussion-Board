@@ -1,9 +1,9 @@
-import { CommentBase, Thread } from '@/types/entities';
+import { Comment, Thread } from '@/types/entities';
 import { createContext } from 'react';
 
 export interface IThreadContext {
   thread: Thread | undefined;
-  comments: CommentBase[] | undefined;
+  comments: Comment[] | undefined;
   replyToComment(parentCommentId: string, content: string): Promise<unknown>;
 }
 
