@@ -16,7 +16,7 @@ export const UserContext = createContext<IUserContext>({
 });
 
 export const UserContextProvider = ({ children }: Props) => {
-  const [account, setAccount] = useState();
+  const [account, setAccount] = useState<string>();
 
   const _dangerouslySetAccount = (account: string) => {
     setAccount(account);
