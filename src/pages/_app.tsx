@@ -3,7 +3,7 @@ import '@/styles/globals.css';
 import { apolloClient } from '@/lib/apolloClient';
 import { ApolloProvider } from '@apollo/client';
 import { MetamaskConnect } from '@/components/MetamaskConnect';
-import { UserContextProvider } from '@/UserContect';
+import { UserContextProvider } from '@/UserContext';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (

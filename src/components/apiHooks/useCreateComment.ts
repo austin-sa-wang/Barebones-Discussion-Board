@@ -1,5 +1,5 @@
 import { CommentInput } from '@/types/entities';
-import { useUserContext } from '@/UserContect';
+import { useUserContext } from '@/UserContext';
 import { gql, useMutation } from '@apollo/client';
 
 const CREATE_COMMENT = gql`

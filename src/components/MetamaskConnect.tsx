@@ -1,4 +1,4 @@
-import { useUserContext } from '@/UserContect';
+import { useUserContext } from '@/UserContext';
 import React from 'react';
 
 export const MetamaskConnect = () => {
