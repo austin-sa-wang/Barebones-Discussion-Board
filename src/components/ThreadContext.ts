@@ -4,13 +4,13 @@ import { createContext } from 'react';
 export interface IThreadContext {
   thread: Thread | undefined;
   comments: CommentBase[] | undefined;
-  replyToComment(parentCommentId: string, content: string): void;
+  replyToComment(parentCommentId: string, content: string): Promise<unknown>;
 }
 
 export const ThreadContext = createContext<IThreadContext>({
   thread: undefined,
   comments: [],
-  replyToComment: () => {
+  replyToComment: async () => {
     console.log(`stub`);
   },
 });
