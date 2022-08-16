@@ -18,6 +18,10 @@ export interface Comment {
   parentId: string;
 }
 
+export interface CommentForView extends Comment {
+  childrenComments: CommentForView[];
+}
+
 export interface ThreadData {
   thread: Thread;
 }

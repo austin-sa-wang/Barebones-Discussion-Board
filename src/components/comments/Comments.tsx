@@ -1,4 +1,4 @@
-import { CommentsData, ThreadsData } from '@/types/entities';
+import { CommentsData } from '@/types/entities';
 import { useQuery, gql } from '@apollo/client';
 import { isNil } from 'ramda';
 

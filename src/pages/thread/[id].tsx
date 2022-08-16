@@ -1,5 +1,5 @@
 import { BasicLinkButton } from '@/components/BasicButton';
-import Comments from '@/components/Comments';
+import Comments from '@/components/comments/Comments';
 import { CommentInput, Entity, ThreadData } from '@/types/entities';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
