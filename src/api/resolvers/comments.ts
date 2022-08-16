@@ -12,7 +12,7 @@ export const comments = async (parent: unknown, args: { threadId: string }) => {
     .find({
       threadId: args.threadId,
     })
-    .sort({ depth: 1, createdAt: -1 })
+    .sort({ depth: 1, createdAt: -1 }) // @implicitDependency the createdAt order dicates how FE shows
     .toArray();
 
   const sortedComments = sortCommentsAsFlattenedTree(comments);
