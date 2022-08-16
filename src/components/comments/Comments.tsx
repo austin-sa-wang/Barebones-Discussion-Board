@@ -6,8 +6,6 @@ import { CommentsView } from './CommentsView';
 export default function Comments() {
   const threadContext = useContext(ThreadContext);
 
-  console.log(`threa`, threadContext);
-
   return (
     <>
       {isNil(threadContext.comments) ? null : (

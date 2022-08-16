@@ -16,9 +16,6 @@ export const comments = async (parent: unknown, args: { threadId: string }) => {
     .toArray();
 
   const sortedComments = sortCommentsAsFlattenedTree(comments);
-  console.log(`comments`, comments);
-  console.log(`sortedComments`, sortedComments);
-
   return sortedComments;
 };
 
