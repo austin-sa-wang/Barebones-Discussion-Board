@@ -16,6 +16,7 @@ export const typeDefs = gql`
     _id: ID!
     content: String
     parentCommentId: ID
+    depth: Int
   }
 
   input ThreadInput {

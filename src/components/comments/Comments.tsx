@@ -9,6 +9,7 @@ const QUERY = gql`
       _id
       content
       parentCommentId
+      depth
     }
   }
 `;
@@ -34,12 +35,10 @@ export default function Comments({ threadId }: Props) {
   }
 
   return (
-    <div className="container mx-auto border">
-      <div className="grid grid-cols-1 divide-y">
-        {isNil(data) || isNil(data.comments) ? null : (
-          <CommentsView comments={data.comments} />
-        )}
-      </div>
-    </div>
+    <>
+      {isNil(data) || isNil(data.comments) ? null : (
+        <CommentsView comments={data.comments} />
+      )}
+    </>
   );
 }

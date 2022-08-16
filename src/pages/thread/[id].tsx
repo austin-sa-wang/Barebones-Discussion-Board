@@ -86,18 +86,21 @@ export default function Threads() {
         <div className="mt-2">
           <h1>Comments</h1>
           <Comments threadId={threadId} />
-          <textarea
-            className="border p-4 min-w-full h-24"
-            value={commentContent}
-            onChange={(change) => setCommentContent(change.target.value)}
-          ></textarea>
-          <button
-            onClick={() => createComment()}
-            className="p-2 font-semibold text-sm bg-cyan-500 hover:bg-sky-700 text-white rounded-md shadow-sm"
-            disabled={loading}
-          >
-            {loading ? `Saving...` : `Add Comment`}
-          </button>
+
+          <div className="mt-4">
+            <textarea
+              className="border p-4 min-w-full h-24"
+              value={commentContent}
+              onChange={(change) => setCommentContent(change.target.value)}
+            ></textarea>
+            <button
+              onClick={() => createComment()}
+              className="p-2 font-semibold text-sm bg-cyan-500 hover:bg-sky-700 text-white rounded-md shadow-sm"
+              disabled={loading}
+            >
+              {loading ? `Saving...` : `Add Comment`}
+            </button>
+          </div>
         </div>
       </div>
     </>

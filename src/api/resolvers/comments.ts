@@ -1,30 +1,25 @@
 import { connectToDatabase } from '@/lib/mongoClient';
+import { sortCommentsAsFlattenedTree } from '@/lib/sortCommentsAsFlattenedTree';
 import { CommentBase, CommentInput } from '@/types/entities';
 import { ObjectId } from 'mongodb';
 import { isNil } from 'ramda';
-
-export const thread = async (parent: unknown, args: { id: string }) => {
-  const { db } = await connectToDatabase();
-
-  const thread = await db
-    .collection(`threads`)
-    .findOne({ _id: new ObjectId(args.id) });
-
-  return thread;
-};
 
 export const comments = async (parent: unknown, args: { threadId: string }) => {
   const { db } = await connectToDatabase();
 
   const comments = await db
-    .collection(`comments`)
+    .collection<CommentBase>(`comments`)
     .find({
       threadId: args.threadId,
     })
-    .sort({ createdAt: -1 })
+    .sort({ depth: 1, createdAt: -1 })
     .toArray();
 
-  return comments;
+  const sortedComments = sortCommentsAsFlattenedTree(comments);
+  console.log(`comments`, comments);
+  console.log(`sortedComments`, sortedComments);
+
+  return sortedComments;
 };
 
 export const createComment = async (parent: unknown, args: CommentInput) => {
