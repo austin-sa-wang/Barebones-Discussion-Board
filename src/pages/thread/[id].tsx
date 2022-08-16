@@ -63,7 +63,7 @@ export default function Threads() {
     variables: {
       id: threadId,
     },
-    fetchPolicy: `network-only`,
+    fetchPolicy: `cache-and-network`,
     skip: shouldSkip,
   });
 

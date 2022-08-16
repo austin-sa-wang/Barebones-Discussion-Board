@@ -1,4 +1,4 @@
-import { ThreadsData } from '@/types/entities';
+import { ThreadData, ThreadsData } from '@/types/entities';
 import { useQuery, gql } from '@apollo/client';
 import Link from 'next/link';
 import { isNil } from 'ramda';
@@ -8,6 +8,7 @@ const QUERY = gql`
     threads {
       _id
       title
+      content
       userAccount
     }
   }
