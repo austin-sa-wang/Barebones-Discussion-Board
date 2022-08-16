@@ -1,6 +1,7 @@
 import { BasicLinkButton } from '@/components/BasicButton';
 import Comments from '@/components/comments/Comments';
-import { CommentInput, ThreadData } from '@/types/entities';
+import { ThreadContext } from '@/components/ThreadContext';
+import { CommentInput, CommentsData, ThreadData } from '@/types/entities';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { isNil } from 'ramda';
@@ -12,6 +13,17 @@ const QUERY = gql`
       _id
       title
       content
+    }
+  }
+`;
+
+const COMMENTS_QUERY = gql`
+  query Comments($threadId: ID!) {
+    comments(threadId: $threadId) {
+      _id
+      content
+      parentCommentId
+      depth
     }
   }
 `;
@@ -40,6 +52,12 @@ export default function Threads() {
     skip: shouldSkip,
   });
 
+  const { data: commentsData } = useQuery<CommentsData>(COMMENTS_QUERY, {
+    variables: {
+      threadId,
+    },
+  });
+
   const [commentContent, setCommentContent] = useState(``);
   const [createCommentToServer] = useMutation<any, CommentInput>(
     CREATE_COMMENT,
@@ -64,6 +82,14 @@ export default function Threads() {
     });
   };
 
+  const threadContextInstance = {
+    thread: data,
+    comments: isNil(commentsData) ? null : commentsData.comments,
+    replyToComment: () => {
+      console.log(`stub`);
+    },
+  };
+
   return (
     <>
       <BasicLinkButton
@@ -83,25 +109,27 @@ export default function Threads() {
             </div>
           )}
         </div>
-        <div className="mt-2">
-          <h1>Comments</h1>
-          <Comments threadId={threadId} />
+        <ThreadContext.Provider value={threadContextInstance}>
+          <div className="mt-2">
+            <h1>Comments</h1>
+            <Comments threadId={threadId} />
 
-          <div className="mt-4">
-            <textarea
-              className="border p-4 min-w-full h-24"
-              value={commentContent}
-              onChange={(change) => setCommentContent(change.target.value)}
-            ></textarea>
-            <button
-              onClick={() => createComment()}
-              className="p-2 font-semibold text-sm bg-cyan-500 hover:bg-sky-700 text-white rounded-md shadow-sm"
-              disabled={loading}
-            >
-              {loading ? `Saving...` : `Add Comment`}
-            </button>
+            <div className="mt-4">
+              <textarea
+                className="border p-4 min-w-full h-24"
+                value={commentContent}
+                onChange={(change) => setCommentContent(change.target.value)}
+              ></textarea>
+              <button
+                onClick={() => createComment()}
+                className="p-2 font-semibold text-sm bg-cyan-500 hover:bg-sky-700 text-white rounded-md shadow-sm"
+                disabled={loading}
+              >
+                {loading ? `Saving...` : `Add Comment`}
+              </button>
+            </div>
           </div>
-        </div>
+        </ThreadContext.Provider>
       </div>
     </>
   );
