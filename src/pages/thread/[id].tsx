@@ -5,7 +5,7 @@ import { CommentInput, CommentsData, ThreadData } from '@/types/entities';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { isNil } from 'ramda';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const QUERY = gql`
   query Thread($id: ID!) {
@@ -81,6 +81,23 @@ export default function Threads() {
     },
   );
 
+  const threadContextInstance = useMemo<IThreadContext>(() => {
+    return {
+      thread: isNil(threadData) ? undefined : threadData.thread,
+      comments: isNil(commentsData) ? undefined : commentsData.comments,
+      replyToComment: (parentCommentId, content) => {
+        return createCommentToServer({
+          variables: {
+            threadId,
+            content,
+            parentCommentId,
+          },
+          refetchQueries: [`Comments`],
+        });
+      },
+    };
+  }, [commentsData]);
+
   if (error) {
     return <h2>Something went wrong {JSON.stringify(error)}</h2>;
   }
@@ -93,21 +110,6 @@ export default function Threads() {
       },
       refetchQueries: [`Comments`],
     });
-  };
-
-  const threadContextInstance: IThreadContext = {
-    thread: isNil(threadData) ? undefined : threadData.comments,
-    comments: isNil(commentsData) ? undefined : commentsData.comments,
-    replyToComment: (parentCommentId, content) => {
-      createCommentToServer({
-        variables: {
-          threadId,
-          content,
-          parentCommentId,
-        },
-        refetchQueries: [`Comments`],
-      });
-    },
   };
 
   return (
