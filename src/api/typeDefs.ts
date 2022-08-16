@@ -32,6 +32,11 @@ export const typeDefs = gql`
 
   type Mutation {
     createThread(input: ThreadInput!): ID
-    createComment(parentEntity: Entity!, parentId: ID!, content: String!): ID
+    createComment(
+      threadId: ID!
+      parentEntity: Entity!
+      parentId: ID!
+      content: String!
+    ): ID
   }
 `;

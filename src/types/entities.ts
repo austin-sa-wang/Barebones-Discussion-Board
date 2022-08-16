@@ -6,19 +6,27 @@ export enum Entity {
 }
 
 export interface Thread {
-  _id: string;
+  _id: ObjectId;
   title: string;
   content: string;
 }
 
-export interface Comment {
-  _id: string;
+export interface CommentBase {
+  _id: ObjectId;
   content: string;
   parentEntity: Entity;
   parentId: string;
+  depth: number;
 }
 
-export interface CommentForView extends Comment {
+export interface Comment extends CommentBase {
+  childrenComments: Comment[];
+}
+
+export type FlattenedCommentNode = CommentBase;
+
+export type FlattenedCommentTree = FlattenedCommentNode[];
+export interface CommentForView {
   childrenComments: CommentForView[];
 }
 
@@ -36,6 +44,7 @@ export interface ThreadInput {
 }
 
 export interface CommentInput {
+  threadId: string;
   parentEntity: Entity;
   parentId: string;
   content: string;

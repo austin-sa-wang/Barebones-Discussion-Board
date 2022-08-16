@@ -18,11 +18,13 @@ const QUERY = gql`
 
 const CREATE_COMMENT = gql`
   mutation createComment(
+    $threadId: ID!
     $parentEntity: Entity!
     $parentId: ID!
     $content: String!
   ) {
     createComment(
+      threadId: $threadId
       parentEntity: $parentEntity
       parentId: $parentId
       content: $content
@@ -33,16 +35,16 @@ const CREATE_COMMENT = gql`
 export default function Threads() {
   const router = useRouter();
 
-  const id = router.query.id as unknown as string;
+  const threadId = router.query.id as unknown as string;
 
   let shouldSkip = false;
-  if (typeof id !== `string`) {
+  if (typeof threadId !== `string`) {
     shouldSkip = true;
   }
 
   const { data, loading, error } = useQuery<ThreadData>(QUERY, {
     variables: {
-      id,
+      id: threadId,
     },
     fetchPolicy: `network-only`,
     skip: shouldSkip,
@@ -65,8 +67,9 @@ export default function Threads() {
   const createComment = () => {
     createCommentToServer({
       variables: {
+        threadId,
         parentEntity: Entity.Thread,
-        parentId: id,
+        parentId: threadId,
         content: commentContent,
       },
       refetchQueries: [`Comments`],
@@ -94,7 +97,7 @@ export default function Threads() {
         </div>
         <div className="mt-2">
           <h1>Comments</h1>
-          <Comments threadId={id} />
+          <Comments threadId={threadId} />
           <textarea
             className="border p-4 min-w-full h-24"
             value={commentContent}

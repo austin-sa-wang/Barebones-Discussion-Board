@@ -1,6 +1,7 @@
 import { connectToDatabase } from '@/lib/mongoClient';
-import { CommentInput, ThreadInput } from '@/types/entities';
+import { CommentBase, CommentInput, Entity } from '@/types/entities';
 import { ObjectId } from 'mongodb';
+import { isNil } from 'ramda';
 
 export const thread = async (parent: unknown, args: { id: string }) => {
   const { db } = await connectToDatabase();
@@ -14,8 +15,6 @@ export const thread = async (parent: unknown, args: { id: string }) => {
 
 export const comments = async (parent: unknown, args: { threadId: string }) => {
   const { db } = await connectToDatabase();
-
-  console.log(`args.threadId`, args.threadId);
 
   const comments = await db
     .collection(`comments`)
@@ -31,12 +30,32 @@ export const comments = async (parent: unknown, args: { threadId: string }) => {
 export const createComment = async (parent: unknown, args: CommentInput) => {
   const { db } = await connectToDatabase();
 
+  // @todo validate parent thread
+
+  let depth = 0;
+  if (args.parentEntity === Entity.Comment) {
+    const parentComment = await db.collection<CommentBase>(`comments`).findOne(
+      {
+        _id: new ObjectId(args.parentId),
+      },
+      { projection: { depth: 1 } },
+    );
+
+    if (isNil(parentComment)) {
+      throw new Error(`parent comment does not exist`);
+    }
+
+    depth = parentComment.depth + 1;
+  }
+
   const createdThread = await db.collection(`comments`).insertOne({
     _id: new ObjectId(),
+    threadId: args.threadId,
     parentEntity: args.parentEntity,
     parentId: args.parentId,
     content: args.content,
     createdAt: new Date(),
+    depth,
   });
 
   return createdThread.insertedId;
