@@ -1,5 +1,8 @@
 import { CommentBase } from '@/types/entities';
-import { sortCommentsAsFlattenedTree } from '../sortCommentsAsFlattenedTree';
+import {
+  PartialComment,
+  sortCommentsAsFlattenedTree,
+} from '../sortCommentsAsFlattenedTree';
 
 type CommentForTest = Pick<CommentBase, 'content' | 'parentCommentId'> & {
   _id: string;
@@ -29,9 +32,9 @@ describe(`sortCommentsAsFlattenedTree`, () => {
 
     const expectedOrderedComments = [rootComment, a2];
 
-    expect(sortCommentsAsFlattenedTree(input)).toMatchObject(
-      expectedOrderedComments,
-    );
+    expect(
+      sortCommentsAsFlattenedTree(input as unknown as PartialComment[]),
+    ).toMatchObject(expectedOrderedComments);
   });
 
   it(`2 levels of nesting`, () => {
@@ -39,9 +42,9 @@ describe(`sortCommentsAsFlattenedTree`, () => {
 
     const expectedOrderedComments = [rootComment, a2, a2a];
 
-    expect(sortCommentsAsFlattenedTree(input)).toMatchObject(
-      expectedOrderedComments,
-    );
+    expect(
+      sortCommentsAsFlattenedTree(input as unknown as PartialComment[]),
+    ).toMatchObject(expectedOrderedComments);
   });
 
   it(`2 levels of nesting with multiple siblings`, () => {
@@ -55,8 +58,8 @@ describe(`sortCommentsAsFlattenedTree`, () => {
 
     const expectedOrderedComments = [rootComment, a2, a2a, a2b];
 
-    expect(sortCommentsAsFlattenedTree(input)).toMatchObject(
-      expectedOrderedComments,
-    );
+    expect(
+      sortCommentsAsFlattenedTree(input as unknown as PartialComment[]),
+    ).toMatchObject(expectedOrderedComments);
   });
 });

@@ -1,13 +1,10 @@
-import { Comment } from '@/types/entities';
 import { sortBy } from 'ramda';
 import { arrayToTree, TreeItem } from 'performant-array-to-tree';
 
 import { depth } from 'treeverse';
+import { Comment } from '@/types/entities';
 
-interface PartialComment {
-  _id: string;
-  parentCommentId: string | undefined;
-}
+export type PartialComment = Pick<Comment, '_id' | 'parentCommentId'>;
 
 /**
  *
