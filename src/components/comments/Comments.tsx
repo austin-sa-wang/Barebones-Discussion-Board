@@ -7,8 +7,7 @@ const QUERY = gql`
     comments(threadId: $threadId) {
       _id
       content
-      parentEntity
-      parentId
+      parentCommentId
     }
   }
 `;
@@ -18,6 +17,7 @@ interface Props {
 }
 
 export default function Comments({ threadId }: Props) {
+  console.log(`th`, threadId);
   const { data, loading, error } = useQuery<CommentsData>(QUERY, {
     variables: {
       threadId,

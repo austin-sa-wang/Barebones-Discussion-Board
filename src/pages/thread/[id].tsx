@@ -1,6 +1,6 @@
 import { BasicLinkButton } from '@/components/BasicButton';
 import Comments from '@/components/comments/Comments';
-import { CommentInput, Entity, ThreadData } from '@/types/entities';
+import { CommentInput, ThreadData } from '@/types/entities';
 import { useQuery, gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { isNil } from 'ramda';
@@ -17,18 +17,8 @@ const QUERY = gql`
 `;
 
 const CREATE_COMMENT = gql`
-  mutation createComment(
-    $threadId: ID!
-    $parentEntity: Entity!
-    $parentId: ID!
-    $content: String!
-  ) {
-    createComment(
-      threadId: $threadId
-      parentEntity: $parentEntity
-      parentId: $parentId
-      content: $content
-    )
+  mutation createComment($threadId: ID!, $content: String!) {
+    createComment(threadId: $threadId, content: $content)
   }
 `;
 
@@ -68,8 +58,6 @@ export default function Threads() {
     createCommentToServer({
       variables: {
         threadId,
-        parentEntity: Entity.Thread,
-        parentId: threadId,
         content: commentContent,
       },
       refetchQueries: [`Comments`],

@@ -10,16 +10,14 @@ export default {
 
 const nestedComment: CommentForView = {
   _id: `someNestedCommentId`,
-  parentEntity: Entity.Thread,
-  parentId: `someNestedCommentParentId`,
+  parentCommentId: `someNestedCommentparentCommentId`,
   content: `Some nested comment content`,
   childrenComments: [],
 };
 
 const data: CommentForView = {
   _id: `someCommentId`,
-  parentEntity: Entity.Thread,
-  parentId: `someParentId`,
+  parentCommentId: `someparentCommentId`,
   content: `Some comment content`,
   childrenComments: [nestedComment],
 };

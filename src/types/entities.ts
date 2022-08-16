@@ -1,10 +1,5 @@
 import { ObjectId } from 'mongodb';
 
-export enum Entity {
-  Thread = `THREAD`,
-  Comment = `COMMENT`,
-}
-
 export interface Thread {
   _id: ObjectId;
   title: string;
@@ -14,8 +9,7 @@ export interface Thread {
 export interface CommentBase {
   _id: ObjectId;
   content: string;
-  parentEntity: Entity;
-  parentId: string;
+  parentCommentId: string;
   depth: number;
 }
 
@@ -45,8 +39,7 @@ export interface ThreadInput {
 
 export interface CommentInput {
   threadId: string;
-  parentEntity: Entity;
-  parentId: string;
+  parentCommentId?: string;
   content: string;
 }
 

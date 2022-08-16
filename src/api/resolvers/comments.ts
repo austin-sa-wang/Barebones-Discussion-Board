@@ -1,5 +1,5 @@
 import { connectToDatabase } from '@/lib/mongoClient';
-import { CommentBase, CommentInput, Entity } from '@/types/entities';
+import { CommentBase, CommentInput } from '@/types/entities';
 import { ObjectId } from 'mongodb';
 import { isNil } from 'ramda';
 
@@ -19,7 +19,7 @@ export const comments = async (parent: unknown, args: { threadId: string }) => {
   const comments = await db
     .collection(`comments`)
     .find({
-      parentId: args.threadId,
+      threadId: args.threadId,
     })
     .sort({ createdAt: -1 })
     .toArray();
@@ -33,10 +33,10 @@ export const createComment = async (parent: unknown, args: CommentInput) => {
   // @todo validate parent thread
 
   let depth = 0;
-  if (args.parentEntity === Entity.Comment) {
+  if (!isNil(args.parentCommentId)) {
     const parentComment = await db.collection<CommentBase>(`comments`).findOne(
       {
-        _id: new ObjectId(args.parentId),
+        _id: new ObjectId(args.parentCommentId),
       },
       { projection: { depth: 1 } },
     );
@@ -51,8 +51,7 @@ export const createComment = async (parent: unknown, args: CommentInput) => {
   const createdThread = await db.collection(`comments`).insertOne({
     _id: new ObjectId(),
     threadId: args.threadId,
-    parentEntity: args.parentEntity,
-    parentId: args.parentId,
+    parentCommentId: args.parentCommentId,
     content: args.content,
     createdAt: new Date(),
     depth,
