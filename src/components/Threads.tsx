@@ -1,4 +1,4 @@
-import { ThreadData, ThreadsData } from '@/types/entities';
+import { ThreadsData } from '@/types/entities';
 import { useQuery, gql } from '@apollo/client';
 import Link from 'next/link';
 import { isNil } from 'ramda';
@@ -19,7 +19,7 @@ export default function Threads() {
     fetchPolicy: `cache-and-network`,
   });
 
-  if (loading) {
+  if (isNil(data) && loading) {
     return <h2>Loading...</h2>;
   }
 
