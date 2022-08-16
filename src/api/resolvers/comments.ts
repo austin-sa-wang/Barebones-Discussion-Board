@@ -45,7 +45,7 @@ export const createComment = async (
     depth = parentComment.depth + 1;
   }
 
-  const createdThread = await db.collection(`comments`).insertOne({
+  const createdComment = await db.collection(`comments`).insertOne({
     _id: new ObjectId(),
     threadId: args.threadId,
     parentCommentId: args.parentCommentId,
@@ -55,5 +55,5 @@ export const createComment = async (
     userAccount: context.userAccount,
   });
 
-  return createdThread.insertedId;
+  return createdComment.insertedId;
 };
