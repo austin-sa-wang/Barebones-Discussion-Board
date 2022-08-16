@@ -1,8 +1,8 @@
-import { ClientComment, Thread } from '@/types/entities';
+import { ClientComment, ClientThread, Thread } from '@/types/entities';
 import { createContext } from 'react';
 
 export interface IThreadContext {
-  thread: Thread | undefined;
+  thread: ClientThread | undefined;
   comments: ClientComment[] | undefined;
   replyToComment(parentCommentId: string, content: string): Promise<unknown>;
 }

@@ -139,7 +139,7 @@ export default function Threads() {
         <ThreadContext.Provider value={threadContextInstance}>
           <div className="mt-2">
             <h1>Comments</h1>
-            <Comments threadId={threadId} />
+            <Comments />
 
             <div className="mt-4">
               <textarea

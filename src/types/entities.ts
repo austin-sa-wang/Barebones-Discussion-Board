@@ -10,7 +10,7 @@ export interface Thread extends ThreadBase {
   _id: ObjectId;
 }
 
-interface ClientThread extends ThreadBase {
+export interface ClientThread extends ThreadBase {
   _id: string;
 }
 
