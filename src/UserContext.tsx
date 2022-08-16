@@ -15,13 +15,15 @@ export const UserContext = createContext<IUserContext>({
   },
 });
 
+// @todo sync actual metamask connected state with our own in-memory state
+// right now they are out of sync on refresh
 export const UserContextProvider = ({ children }: Props) => {
   const [account, setAccount] = useState<string>();
 
-  const _dangerouslySetAccount = (account: string) => {
+  const _dangerouslySetAccount = useCallback((account: string) => {
     setAccount(account);
     localStorage.setItem(`token`, account);
-  };
+  }, []);
 
   const connect = useCallback(async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
