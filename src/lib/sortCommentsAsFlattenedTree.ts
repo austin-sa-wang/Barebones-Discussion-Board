@@ -18,7 +18,7 @@ export const sortCommentsAsFlattenedTree = (
   // build map per depth then assemble
 
   // @assumption assume nodes are already sorted by depth. This library requires it for O(n)
-  const tree = arrayToTree(orderedComments, {
+  const tree = arrayToTree(comments, {
     id: `_id`,
     parentId: `parentCommentId`,
   });
