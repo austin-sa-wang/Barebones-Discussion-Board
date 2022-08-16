@@ -1,29 +1,31 @@
-import { Comment } from '@/types/entities';
+import { CommentBase } from '@/types/entities';
 import { sortCommentsAsFlattenedTree } from '../sortCommentsAsFlattenedTree';
 
+type CommentForTest = Pick<CommentBase, 'content' | 'parentCommentId'> & {
+  _id: string;
+};
+
 describe(`sortCommentsAsFlattenedTree`, () => {
-  const rootComment: Comment = {
+  const rootComment: CommentForTest = {
     _id: `rootComment`,
     content: `rootComment`,
-    depth: 0,
+    parentCommentId: undefined,
   };
 
-  const a2: Comment = {
+  const a2: CommentForTest = {
     _id: `a2`,
     content: `a2`,
     parentCommentId: `rootComment`,
-    depth: 1,
   };
 
-  const a2a: Comment = {
+  const a2a: CommentForTest = {
     _id: `a2a`,
     content: `a2a`,
     parentCommentId: `a2`,
-    depth: 2,
   };
 
   it(`1 level of nesting`, () => {
-    const input: Comment[] = [a2, rootComment];
+    const input: CommentForTest[] = [a2, rootComment];
 
     const expectedOrderedComments = [rootComment, a2];
 
@@ -33,7 +35,7 @@ describe(`sortCommentsAsFlattenedTree`, () => {
   });
 
   it(`2 levels of nesting`, () => {
-    const input: Comment[] = [a2a, a2, rootComment];
+    const input: CommentForTest[] = [a2a, a2, rootComment];
 
     const expectedOrderedComments = [rootComment, a2, a2a];
 
@@ -43,14 +45,13 @@ describe(`sortCommentsAsFlattenedTree`, () => {
   });
 
   it(`2 levels of nesting with multiple siblings`, () => {
-    const a2b: Comment = {
+    const a2b: CommentForTest = {
       _id: `a2b`,
       content: `a2b`,
       parentCommentId: `a2`,
-      depth: 2,
     };
 
-    const input: Comment[] = [a2b, a2a, a2, rootComment];
+    const input: CommentForTest[] = [a2b, a2a, a2, rootComment];
 
     const expectedOrderedComments = [rootComment, a2, a2a, a2b];
 

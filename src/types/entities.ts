@@ -14,9 +14,9 @@ export interface ClientThread extends ThreadBase {
   _id: string;
 }
 
-interface CommentBase {
+export interface CommentBase {
   content: string;
-  parentCommentId: string;
+  parentCommentId: string | undefined;
   depth: number;
   createdAt: string;
   userAccount: string;
