@@ -1,8 +1,8 @@
-import { Comment } from '@/types/entities';
+import { Comment as IComment } from '@/types/entities';
 import { Comment } from './Comment';
 
 interface Props {
-  comments: Comment[];
+  comments: IComment[];
 }
 
 export function CommentsView({ comments }: Props) {
