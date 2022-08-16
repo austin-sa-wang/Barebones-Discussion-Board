@@ -2,7 +2,7 @@ import { useUserContext } from '@/UserContect';
 import React from 'react';
 
 export const MetamaskConnect = () => {
-  const [{ connectedAccounts, isConnected }, connect] = useUserContext();
+  const [{ connectedAccount, isConnected }, connect] = useUserContext();
 
   if (!isConnected) {
     return (
@@ -14,6 +14,10 @@ export const MetamaskConnect = () => {
       </button>
     );
   } else {
-    return <div className='bg-green-200'><p>Connected as {JSON.stringify(connectedAccounts)}</p></div>;
+    return (
+      <div className="bg-green-200">
+        <p>Connected as {JSON.stringify(connectedAccount)}</p>
+      </div>
+    );
   }
 };

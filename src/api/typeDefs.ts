@@ -1,16 +1,12 @@
 import { gql } from '@apollo/client';
 
 export const typeDefs = gql`
-  enum Entity {
-    THREAD
-    COMMENT
-  }
-
   type Thread {
     _id: ID!
     title: String
     content: String
     createdAt: String
+    userAccount: String
   }
 
   type Comment {
@@ -19,6 +15,7 @@ export const typeDefs = gql`
     parentCommentId: ID
     depth: Int
     createdAt: String
+    userAccount: String
   }
 
   input ThreadInput {

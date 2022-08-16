@@ -9,23 +9,28 @@ type Props = {
 };
 
 export const UserContext = createContext<IUserContext>({
-  connectedAccounts: undefined,
+  connectedAccount: undefined,
   connect: () => {
     console.log(`stub`);
   },
 });
 
 export const UserContextProvider = ({ children }: Props) => {
-  const [accounts, setAccounts] = useState();
+  const [account, setAccount] = useState();
+
+  const _dangerouslySetAccount = (account: string) => {
+    setAccount(account);
+    localStorage.setItem(`token`, account);
+  };
 
   const connect = useCallback(async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const accounts = await provider.send(`eth_requestAccounts`, []);
-    setAccounts(accounts);
+    _dangerouslySetAccount(accounts[0]);
   }, []);
 
   const userContextInstance = {
-    connectedAccounts: accounts,
+    connectedAccount: account,
     connect,
   };
 
@@ -39,13 +44,13 @@ export const UserContextProvider = ({ children }: Props) => {
 type useUserContextResult = [
   state: {
     isConnected: boolean;
-    connectedAccounts: string[] | undefined;
+    connectedAccount: string | undefined;
   },
   connect: () => void,
 ];
 
 export interface IUserContext {
-  connectedAccounts: string[] | undefined;
+  connectedAccount: string | undefined;
   connect: () => void;
 }
 
@@ -54,9 +59,9 @@ export const useUserContext = (): useUserContextResult => {
 
   const state = {
     isConnected:
-      !isNil(userContext.connectedAccounts) &&
-      !isEmpty(userContext.connectedAccounts),
-    connectedAccounts: userContext.connectedAccounts,
+      !isNil(userContext.connectedAccount) &&
+      !isEmpty(userContext.connectedAccount),
+    connectedAccount: userContext.connectedAccount,
   };
 
   return [state, userContext.connect];
