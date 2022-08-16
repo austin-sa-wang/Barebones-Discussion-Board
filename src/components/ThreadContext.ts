@@ -2,8 +2,8 @@ import { CommentBase, Thread } from '@/types/entities';
 import { createContext } from 'react';
 
 interface ThreadContext {
-  thread: Thread | null;
-  comments: CommentBase[];
+  thread: Thread | undefined;
+  comments: CommentBase[] | undefined;
   replyToComment(parentCommentId: CommentBase, content: string): void;
 }
 

@@ -84,7 +84,7 @@ export default function Threads() {
 
   const threadContextInstance = {
     thread: data,
-    comments: isNil(commentsData) ? null : commentsData.comments,
+    comments: isNil(commentsData) ? undefined : commentsData.comments,
     replyToComment: () => {
       console.log(`stub`);
     },
