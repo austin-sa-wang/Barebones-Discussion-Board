@@ -8,6 +8,7 @@ const QUERY = gql`
     threads {
       _id
       title
+      userAccount
     }
   }
 `;
@@ -42,6 +43,7 @@ export default function Threads() {
                   key={thread._id}
                   className="py-4 px-4 hover:shadow-inner cursor-pointer"
                 >
+                  <p className="text-gray-500 text-xs">{thread.userAccount}</p>
                   <h3>{thread.title}</h3>
                 </div>
               </Link>

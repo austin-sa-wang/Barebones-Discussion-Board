@@ -4,6 +4,9 @@ import { arrayToTree, TreeItem } from 'performant-array-to-tree';
 
 import { depth } from 'treeverse';
 /**
+ *
+ * Get the nested comments in a flat structure in createdAt ASC order
+ *
  * @performanceAlert
  * This solution is unscalable for large amount of data
  *
@@ -23,7 +26,16 @@ export const sortCommentsAsFlattenedTree = (
     parentId: `parentCommentId`,
   });
 
-  const result = tree.reduce<CommentBase[]>((aggregate, current) => {
+  // @dirty the order of the comments is decided from 2 different places
+  // 1) from server, when we query mongo
+  // 2) the sortedTree below
+  // Reason:
+  // We rely on the order from mongo as a performance thing (blind optimization)
+  // However, the way depth first tree travesal here works is it flips the order.
+  // so when we query mongo we actually do it in reverse, so that the traversal here flips it back
+  const sortedTree = sortBy((node) => node.data.createdAt, tree);
+
+  const result = sortedTree.reduce<CommentBase[]>((aggregate, current) => {
     depth<TreeItem>({
       tree: current,
       getChildren: (node) => node.children,

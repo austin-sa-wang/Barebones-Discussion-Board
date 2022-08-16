@@ -13,6 +13,7 @@ const QUERY = gql`
       _id
       title
       content
+      userAccount
     }
   }
 `;
@@ -25,6 +26,7 @@ const COMMENTS_QUERY = gql`
       parentCommentId
       depth
       createdAt
+      userAccount
     }
   }
 `;
@@ -124,6 +126,9 @@ export default function Threads() {
         <div className="mt-2">
           {isNil(threadData) || isNil(threadData.thread) ? null : (
             <div>
+              <p className="text-slate-400 text-xs">
+                {threadData.thread.userAccount}
+              </p>
               <p className="p-2">{threadData.thread.title}</p>
               <p className="border p-4 min-w-full h-48">
                 {threadData.thread.content}

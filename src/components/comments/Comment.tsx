@@ -29,12 +29,13 @@ export const Comment = ({ comment }: Props) => {
             <div key={index} className="border-l-2 px-2 h-full"></div>
           ))}
       </div>
-      <div>
-        <p className="py-4">{comment.content}</p>
+      <div className="py-4">
+        <p className="text-slate-400 text-xs">{comment.userAccount}</p>
+        <p>{comment.content}</p>
         <p className="text-xs text-slate-400">{comment.createdAt}</p>
         <button
           onClick={() => toggleReplyBox()}
-          className="p-1 text-xs text-slate-400"
+          className="p-1 text-xs text-slate-600"
           disabled={loading}
         >
           Add Comment

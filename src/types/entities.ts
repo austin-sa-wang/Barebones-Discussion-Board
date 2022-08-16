@@ -4,6 +4,7 @@ export interface Thread {
   _id: ObjectId;
   title: string;
   content: string;
+  userAccount: string;
 }
 
 export interface CommentBase {
@@ -12,6 +13,7 @@ export interface CommentBase {
   parentCommentId: string;
   depth: number;
   createdAt: string;
+  userAccount: string;
 }
 
 export interface Comment extends CommentBase {
