@@ -27,4 +27,6 @@ Barebones Reddit clone with Metamask login
 
   - Jest: Unit Test
   - Storybook: Component Development and Documentation
-  - Ramda: functional programming flavoured helper lib
+  - Ramda: Functional programming flavoured helper lib
+  - Husky: Commit hooks
+  - TSLint: Linting
