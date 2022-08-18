@@ -17,7 +17,14 @@ Barebones Reddit clone with Metamask login
 ## Stack
 
   - Typescript
+  - React
   - Nodejs
   - Graphql
   - Nextjs
   - Mongodb
+
+## Tooling
+
+  - Jest: Unit Test
+  - Storybook: Component Development and Documentation
+  - Ramda: functional programming flavoured helper lib
