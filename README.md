@@ -14,3 +14,10 @@ Barebones Reddit clone with Metamask login
   - User can add comments to a thread
   - User can add comments to a comment
   
+## Stack
+
+  - Typescript
+  - Nodejs
+  - Graphql
+  - Nextjs
+  - Mongodb
