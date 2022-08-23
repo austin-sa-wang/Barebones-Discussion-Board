@@ -4,7 +4,7 @@
 
 Barebones Reddit clone with Metamask login
 
-10-hour project to explore partially new stack with
+10-hour project to explore new technologies
   - app framework: Nextjs
   - hosting: Vercel
   - db hosting: MongoAtlas
